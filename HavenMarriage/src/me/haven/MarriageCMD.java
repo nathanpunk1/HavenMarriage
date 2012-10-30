@@ -14,11 +14,11 @@ import org.bukkit.entity.Player;
 
 public class MarriageCMD implements CommandExecutor{
 	public List<String> reqs = new ArrayList<String>();
-	public List<String> partners = null;
+	public List<String> partners = new ArrayList<String>();
 	private Marriage plugin;
 	public MarriageCMD(Marriage instance) { this.plugin = instance; }
 	private String NoPerm = "You dont have Permission!";
-	private String Marry = "May I Now Pronounce You Man And Wife";
+	private String Marry = "You Are Now Married Congratulations";
 	private String po = "Your partner is offline!";
 
 	public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args)
@@ -167,7 +167,7 @@ public class MarriageCMD implements CommandExecutor{
 		}
 		if(plugin.getCustomConfig().getString("Married." + opname) != null && plugin.getCustomConfig().getString("Married." + opname) != "")
 		{
-			player.sendMessage(ChatColor.RED + opname + "is already Married!");
+			player.sendMessage(ChatColor.RED + opname + " is already Married!");
 			return;
 		}
 		if(plugin.getConfig().getInt("money.marry") != 0)
@@ -240,7 +240,7 @@ public class MarriageCMD implements CommandExecutor{
 		{
 			if(plugin.buyMarry(player, plugin.getConfig().getInt("money.divorce")))
 			{
-				player.sendMessage("[Marriage] " + ChatColor.GREEN + "Some money has been taken form your balance!");
+				player.sendMessage(ChatColor.GREEN + "Some money has been taken form your balance!");
 			}else
 			{
 				return;
@@ -301,6 +301,6 @@ public class MarriageCMD implements CommandExecutor{
 			player.sendMessage(ChatColor.GREEN + "You have entered marry chat mode!");
 		}
 	}
-}
 
+}
 	

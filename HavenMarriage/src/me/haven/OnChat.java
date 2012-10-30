@@ -35,8 +35,8 @@ public class OnChat implements Listener{
 			{
 				return;
 			}
-			oPlayer.sendMessage(ChatColor.GREEN + "[Partner] " +ChatColor.RED +  pname + ChatColor.WHITE + ": " + ChatColor.GREEN + message);
-			player.sendMessage(ChatColor.GREEN + "[Partner] " +ChatColor.RED +  pname + ChatColor.WHITE + ": " + ChatColor.GREEN + message);
+			oPlayer.sendMessage(ChatColor.GREEN + "[Love] " +ChatColor.RED +  pname + ChatColor.WHITE + ": " + ChatColor.GREEN + message);
+			player.sendMessage(ChatColor.GREEN + "[Love] " +ChatColor.RED +  pname + ChatColor.WHITE + ": " + ChatColor.GREEN + message);
 			plugin.log.info("Love Chat: <" + pname + ">: " + message);
 			event.setCancelled(true);
 		}
