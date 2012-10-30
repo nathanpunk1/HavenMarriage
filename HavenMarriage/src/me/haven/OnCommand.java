@@ -1,6 +1,7 @@
 package me.haven;
 
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,14 +22,14 @@ public class OnCommand implements Listener{
 		{
 			plugin.people.add(pname);
 		}
-		if(message.equals("/marry"))
+		if(message.equals("/marriage"))
 		{
-			player.sendMessage("========{ Marriage Reloaded }=========");
-			player.sendMessage("/marry list - see all married players");
-			player.sendMessage("/marry <name> - send a marry request to someone");
-			player.sendMessage("/marry accept <sender> - accept a marry request");
-			player.sendMessage("/marry chat - Chat together with your partner ");
-			player.sendMessage("/marry divorce - If things just dont go your way");
+			player.sendMessage(ChatColor.RED + "========{ Marriage Reloaded }=========");
+			player.sendMessage(ChatColor.RED + "/marriage list - see all married players");
+			player.sendMessage(ChatColor.RED + "/marriage <name> - send a marry request to someone");
+			player.sendMessage(ChatColor.RED + "/marriage accept <sender> - accept a marry request");
+			player.sendMessage(ChatColor.RED + "/marriage chat - Chat together with your partner ");
+			player.sendMessage(ChatColor.RED + "/marriage divorce - If things just dont go your way");
 			event.setCancelled(true);
 		}
 	}

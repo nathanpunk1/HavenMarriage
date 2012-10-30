@@ -31,7 +31,7 @@ public class Marriage extends JavaPlugin{
 	private FileConfiguration customConfig = null;
     private File customConfigFile = null;
 	public String name = "Marriage";
-	public String version = "0.2.4";
+	public String version = "1.0";
 	public boolean used = false;
 
 	public void onEnable()

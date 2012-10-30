@@ -18,7 +18,7 @@ public class Version implements Listener{
 	public Version(Marriage instance) { this.plugin = instance; }
 
 	public String checkForUpdate(String version) throws Exception {
-		URL url = new URL("https://raw.github.com/lenis00012/MarryVersion/master/version.version");
+		URL url = new URL("https://raw.github.com/nathanpunk1/HavenMarriage/master/HavenMarriage/src/me/haven/Versionupdate");
 		HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		String inputLine = in.readLine();
@@ -32,7 +32,7 @@ public class Version implements Listener{
 	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		final Player player = event.getPlayer();
-		if (player != null && (player.isOp() || player.hasPermission("marry.admin"))) {
+		if (player != null && (player.isOp() || player.hasPermission("marriage.admin"))) {
 			plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() { // create a new anonymous task/thread that will check the version asyncronously
 				@Override
 				public void run() {

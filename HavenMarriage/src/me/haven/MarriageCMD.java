@@ -55,19 +55,19 @@ public class MarriageCMD implements CommandExecutor{
 			partners = plugin.getCustomConfig().getStringList("partners");
 		}
 
-	    if(player.hasPermission("marry.*"))
+	    if(player.hasPermission("marriage.*"))
 	    {
-	    	player.hasPermission("marry.marry");
-	    	player.hasPermission("marry.love");
-	    	player.hasPermission("marry.list");
-	    	player.hasPermission("marry.chat");
+	    	player.hasPermission("marriage.marry");
+	    	player.hasPermission("marriage.love");
+	    	player.hasPermission("marriage.list");
+	    	player.hasPermission("marriage.chat");
 	    }
 
 	    if(args[0].equals("accept"))
 	    {
 	    	if(args.length == 2)
 	    	{
-	    		if(!player.hasPermission("marry.marry"))
+	    		if(!player.hasPermission("marriage.marry"))
 	    		{
 	    			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
 	    			return true;
@@ -96,7 +96,7 @@ public class MarriageCMD implements CommandExecutor{
 
 	    else if(args[0].equals("list"))
 	    {
-    		if(!player.hasPermission("marry.list"))
+    		if(!player.hasPermission("marriage.list"))
     		{
     			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
     			return true;
@@ -106,7 +106,7 @@ public class MarriageCMD implements CommandExecutor{
 
 	    else if(args[0].equals("love"))
 	    {
-	    	if(!player.hasPermission("marry.love"))
+	    	if(!player.hasPermission("marriage.love"))
     		{
     			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
     			return true;
@@ -131,7 +131,7 @@ public class MarriageCMD implements CommandExecutor{
 	    }
 	    else if(args[0].equals("chat"))
 	    {
-	    	if(!player.hasPermission("marry.chat"))
+	    	if(!player.hasPermission("marriage.chat"))
     		{
     			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
     			return true;
@@ -150,7 +150,7 @@ public class MarriageCMD implements CommandExecutor{
 				sender.sendMessage("[Marriage] " + ChatColor.RED + "You may not marry yourself!");
 				return true;
 			}
-    		if(!player.hasPermission("marry.marry"))
+    		if(!player.hasPermission("marriage.marry"))
     		{
     			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
     			return true;
