@@ -44,7 +44,7 @@ public class Marriage extends JavaPlugin{
 		pm.registerEvents(new Version(this), this);
 		pm.registerEvents(new OnChat(this), this);
 
-		getCommand("marry").setExecutor(new MarriageCMD(this));
+		getCommand("marriage").setExecutor(new MarriageCMD(this));
 
 		config.options().header("Config now supports colors :D!");
 		config.addDefault("divorce-message", "&c%player_1% has divorced with %player_2%!");
