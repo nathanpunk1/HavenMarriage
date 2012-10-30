@@ -30,7 +30,7 @@ public class Marriage extends JavaPlugin{
 	public List<String> people = new ArrayList<String>();
 	private FileConfiguration customConfig = null;
     private File customConfigFile = null;
-	public String name = "Marriage";
+	public String name = "LoveLife";
 	public String version = "1.0";
 	public boolean used = false;
 
@@ -44,21 +44,16 @@ public class Marriage extends JavaPlugin{
 		pm.registerEvents(new Version(this), this);
 		pm.registerEvents(new OnChat(this), this);
 
-		getCommand("marriage").setExecutor(new MarriageCMD(this));
+		getCommand("love").setExecutor(new MarriageCMD(this));
 
 		config.options().header("Config now supports colors :D!");
 		config.addDefault("divorce-message", "&c%player_1% has divorced with %player_2%!");
 		config.addDefault("marry-message", "&a%player_1% has married with %player_2%!");
-		config.addDefault("settings.double-exp", false);
-		config.addDefault("settings.bonus-exp", 0);
 		config.addDefault("genders.Join_Message", "%player% joined the game");
 		config.addDefault("genders.Quit_Message", "%player% left the game");
-		config.addDefault("genders.required", false);
 		config.addDefault("money.divorce", 0);
 		config.addDefault("money.marry", 0);
 		getCustomConfig().addDefault("partners", derp);
-		getCustomConfig().addDefault("males", derp);
-		getCustomConfig().addDefault("females", derp);
 		getCustomConfig().options().copyDefaults(true);
 		config.options().copyDefaults(true);
 		saveConfig();
@@ -66,11 +61,11 @@ public class Marriage extends JavaPlugin{
 
 	    if (setupEconomy().booleanValue())
 	    {
-	      System.out.println("Marriage has successfully linked with " + economy.getName() + ", via Vault");
+	      System.out.println("LoveLife has successfully linked with " + economy.getName() + ", via Vault");
 	    }
 	    else
 	    {
-	      System.out.println("Marriage: Vault economy not found!");
+	      System.out.println("Vault economy not found!");
 	    }
 		log.info(name + " v" + version + " has been enabled!");
 	}
@@ -119,7 +114,7 @@ public boolean buyDivorce(Player player, double price)
 		return true;
 	}else
 	{
-		player.sendMessage("[Marriage] " + ChatColor.RED + "You dont have enough money!");
+		player.sendMessage(ChatColor.RED + "You dont have enough money!");
 		return false;
 	}
 }
@@ -142,7 +137,7 @@ public boolean buyMarry(Player player, double price)
 		return true;
 	}else
 	{
-		player.sendMessage("[Marriage] " + ChatColor.RED + "You dont have enough money!");
+		player.sendMessage(ChatColor.RED + "You dont have enough money!");
 		return false;
 	}
 }

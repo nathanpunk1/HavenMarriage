@@ -32,7 +32,7 @@ public class Version implements Listener{
 	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		final Player player = event.getPlayer();
-		if (player != null && (player.isOp() || player.hasPermission("marriage.admin"))) {
+		if (player != null && (player.isOp() || player.hasPermission("love.admin"))) {
 			plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() { // create a new anonymous task/thread that will check the version asyncronously
 				@Override
 				public void run() {
@@ -40,13 +40,7 @@ public class Version implements Listener{
 						String oldVersion = "14";
 						String newVersion = checkForUpdate(oldVersion);
 						if (newVersion != null) // do we have a version update? => notify player
-							player.sendMessage("[Marriage] " + ChatColor.YELLOW + "Update avaible, check BukkitDev!");
-						if(plugin.used == false)
-						{
-							player.sendMessage("[Marriage] " + ChatColor.GREEN + "Thanks for using Marriage Reloaded!");
-							player.sendMessage("[Marriage] " + ChatColor.GREEN + "If you like ths plugin, please donate at our BukkitDev page!");
-							plugin.used = true;
-						}
+							player.sendMessage("[Marriage] " + ChatColor.YELLOW + "Update avaible!");
 						} catch (Exception e) {
 							player.sendMessage("Marriage could not get version update - see log for details.");
 							plugin.log.warning("[Marriage] Could not connect to remote server to check for update. Exception said: " + e.getMessage());

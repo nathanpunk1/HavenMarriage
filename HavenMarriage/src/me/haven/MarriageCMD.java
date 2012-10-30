@@ -29,25 +29,9 @@ public class MarriageCMD implements CommandExecutor{
 	    {
 	      player = (Player)sender;
 	    } else {
-	    	sender.sendMessage(ChatColor.RED + "Sorry, but you're alone. ;(");
+	    	sender.sendMessage(ChatColor.RED + "Sorry, but you're alone.");
 	    }
 
-		//if(this.checkHg())
-		//{
-		//	String partner = plugin.getCustomConfig().getString("Married." + player.getName());
-		//	if(partner != null && partner != "")
-		//	{
-		//		if(plugin.people.contains(partner))
-		//		{
-		//			Player oPlayer = Bukkit.getServer().getPlayer(partner);
-		//			if(GameManager.getInstance().getPlayerGameId(oPlayer) != -1)
-		//			{
-		//				player.sendMessage("[Marriage] " + ChatColor.RED + "Your partner is in the HungerGames!");
-		//				return true;
-		//			}
-		//		}
-		//	}
-		//}
 
 		File file = new File(plugin.getDataFolder(), "data.yml");
 		if(file.exists())
@@ -55,21 +39,21 @@ public class MarriageCMD implements CommandExecutor{
 			partners = plugin.getCustomConfig().getStringList("partners");
 		}
 
-	    if(player.hasPermission("marriage.*"))
+	    if(player.hasPermission("love.*"))
 	    {
-	    	player.hasPermission("marriage.marry");
-	    	player.hasPermission("marriage.love");
-	    	player.hasPermission("marriage.list");
-	    	player.hasPermission("marriage.chat");
+	    	player.hasPermission("love.marry");
+	    	player.hasPermission("love.love");
+	    	player.hasPermission("love.list");
+	    	player.hasPermission("love.chat");
 	    }
 
 	    if(args[0].equals("accept"))
 	    {
 	    	if(args.length == 2)
 	    	{
-	    		if(!player.hasPermission("marriage.marry"))
+	    		if(!player.hasPermission("love.marry"))
 	    		{
-	    			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
+	    			player.sendMessage(ChatColor.RED + this.NoPerm);
 	    			return true;
 	    		}
 	    		Player oPlayer = null;
@@ -78,27 +62,27 @@ public class MarriageCMD implements CommandExecutor{
 	    			oPlayer = Bukkit.getServer().getPlayer(args[1]); 
 	    		}else
 	    		{
-	    			player.sendMessage("[Marriage] " + ChatColor.RED + "That player does not exist!");
+	    			player.sendMessage(ChatColor.RED + "That player does not exist!");
 	    			return true;
 	    		}
 	    		if(args[1] == player.getName())
 	    		{
-	    			player.sendMessage("[Marriage] " + ChatColor.RED + "You may not marry yourself!");
+	    			player.sendMessage(ChatColor.RED + "You may not marry yourself!");
 	    			return true;
 	    		}else
 	    		this.Accept(player, oPlayer);
 	    	}else
 	    	{
-	    		player.sendMessage("Invalid useage: /marry accept <sender>");
+	    		player.sendMessage("Invalid useage: /love accept <sender>");
 	    	}
 	    }
 
 
 	    else if(args[0].equals("list"))
 	    {
-    		if(!player.hasPermission("marriage.list"))
+    		if(!player.hasPermission("love.list"))
     		{
-    			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
+    			player.sendMessage(ChatColor.RED + this.NoPerm);
     			return true;
     		}
 	    	this.showList(player);
@@ -106,9 +90,9 @@ public class MarriageCMD implements CommandExecutor{
 
 	    else if(args[0].equals("love"))
 	    {
-	    	if(!player.hasPermission("marriage.love"))
+	    	if(!player.hasPermission("love.love"))
     		{
-    			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
+    			player.sendMessage(ChatColor.RED + this.NoPerm);
     			return true;
     		}
 	    	if(plugin.people.contains(plugin.getCustomConfig().getString("Married." + player.getName())))
@@ -116,29 +100,31 @@ public class MarriageCMD implements CommandExecutor{
 	    		Bukkit.getServer().getPlayer(plugin.getCustomConfig().getString("Married." + player.getName()));
 	    	}else
 	    	{
-	    		player.sendMessage("[Marriage] " + ChatColor.RED + this.po);
+	    		player.sendMessage(ChatColor.RED + this.po);
 	    		return true;
 	    	}
 	    }
+	    
 	    else if(args[0].equals("divorce"))
 	    {
     		String opname = plugin.getCustomConfig().getString("Married." + player.getName());
     		if(opname == "" || opname == null)
     		{
-    			player.sendMessage("[Marriage] " + ChatColor.RED + "You are not married!");
+    			player.sendMessage(ChatColor.RED + "You are not married!");
     		}
     		this.divorce(player, opname);
 	    }
+	    
 	    else if(args[0].equals("chat"))
 	    {
-	    	if(!player.hasPermission("marriage.chat"))
+	    	if(!player.hasPermission("love.chat"))
     		{
-    			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
+    			player.sendMessage(ChatColor.RED + this.NoPerm);
     			return true;
     		}
 	    	if(!plugin.people.contains(plugin.getCustomConfig().getString("Married." + player.getName())))
 	    	{
-	    		player.sendMessage("[Marriage] " + ChatColor.RED + this.po);
+	    		player.sendMessage(ChatColor.RED + this.po);
 	    		return true;
 	    	}
 	    	this.chat(player);
@@ -147,12 +133,12 @@ public class MarriageCMD implements CommandExecutor{
 		{
 			if(args[0].equals(sender.getName()))
 			{
-				sender.sendMessage("[Marriage] " + ChatColor.RED + "You may not marry yourself!");
+				sender.sendMessage(ChatColor.RED + "You may not marry yourself!");
 				return true;
 			}
-    		if(!player.hasPermission("marriage.marry"))
+    		if(!player.hasPermission("love.marry"))
     		{
-    			player.sendMessage("[Marriage] " + ChatColor.RED + this.NoPerm);
+    			player.sendMessage(ChatColor.RED + this.NoPerm);
     			return true;
     		}
 			Player oPlayer = null;
@@ -161,7 +147,7 @@ public class MarriageCMD implements CommandExecutor{
 				oPlayer = Bukkit.getServer().getPlayer(args[0]);
 			}else
 			{
-				player.sendMessage("[Marriage] " + ChatColor.RED + "That player does not exist!");
+				player.sendMessage(ChatColor.RED + "That player does not exist!");
 				return true;
 			}
 			this.SendRequest(player, oPlayer);
@@ -176,26 +162,26 @@ public class MarriageCMD implements CommandExecutor{
 
 		if(plugin.getCustomConfig().getString("Married." + pname) != null && plugin.getCustomConfig().getString("Married." + pname) != "")
 		{
-			player.sendMessage("[Marriage] " + ChatColor.RED + "You are already Married!");
+			player.sendMessage(ChatColor.RED + "You are already Married!");
 			return;
 		}
 		if(plugin.getCustomConfig().getString("Married." + opname) != null && plugin.getCustomConfig().getString("Married." + opname) != "")
 		{
-			player.sendMessage("[Marriage] " + ChatColor.RED + opname + "is already Married!");
+			player.sendMessage(ChatColor.RED + opname + "is already Married!");
 			return;
 		}
 		if(plugin.getConfig().getInt("money.marry") != 0)
 		{
 			if(plugin.buyMarry(player, plugin.getConfig().getInt("money.marry")))
 			{
-				player.sendMessage("[Marriage] " + ChatColor.GREEN + "Some money has been taken form your balence!");
+				player.sendMessage(ChatColor.GREEN + "Some money has been taken form your balence!");
 			}else
 			{
 				return;
 			}
 		}
-		player.sendMessage("[Marriage] " + ChatColor.GREEN + "Request has been sended!");
-		oPlayer.sendMessage("[Marriage] " + ChatColor.GREEN + pname + " requested you to marry, type: " + ChatColor.LIGHT_PURPLE + "/marry accept <sender>" + ChatColor.GREEN + " to accept");
+		player.sendMessage(ChatColor.GREEN + "Request has been sended!");
+		oPlayer.sendMessage(ChatColor.GREEN + pname + " requested you to marry, type: " + ChatColor.LIGHT_PURPLE + "/love accept <sender>" + ChatColor.GREEN + " to accept");
 		reqs.add(opname);
 		reqs.add(pname);
 	}
@@ -206,22 +192,22 @@ public class MarriageCMD implements CommandExecutor{
 		String opname = oPlayer.getName();
 		if(plugin.getCustomConfig().getString("Married." + pname) != null && plugin.getCustomConfig().getString("Married." + pname) != "")
 		{
-			player.sendMessage("[Marriage] " + ChatColor.RED + "You are already Married!");
+			player.sendMessage(ChatColor.RED + "You are already Married!");
 			return;
 		}
 		if(plugin.getCustomConfig().getString("Married." + opname) != null && plugin.getCustomConfig().getString("Married." + opname) != "")
 		{
-			player.sendMessage("[Marriage] " + ChatColor.RED + opname + "is already Married!");
+			player.sendMessage(ChatColor.RED + opname + "is already Married!");
 			return;
 		}
 		if(!reqs.contains(pname))
 		{
-			player.sendMessage("[Marriage] " + ChatColor.RED + "You dont have a marry request!");
+			player.sendMessage(ChatColor.RED + "You dont have a marry request!");
 			return;
 		}
 		if(!reqs.contains(opname))
 		{
-			player.sendMessage("[Marriage] " + ChatColor.RED + "You dont have a marry request from that player!");
+			player.sendMessage(ChatColor.RED + "You dont have a marry request from that player!");
 			return;
 		}
 		plugin.getCustomConfig().set("Married." + pname, opname);
@@ -229,8 +215,8 @@ public class MarriageCMD implements CommandExecutor{
 		partners.add(opname);
 		plugin.getCustomConfig().set("partners", partners);
 		plugin.saveCustomConfig();
-		player.sendMessage("[Marriage] " + ChatColor.GREEN + this.Marry + " " + opname);
-		oPlayer.sendMessage("[Marriage] " + ChatColor.GREEN + this.Marry + " " + pname);
+		player.sendMessage(ChatColor.GREEN + this.Marry + " " + opname);
+		oPlayer.sendMessage(ChatColor.GREEN + this.Marry + " " + pname);
 		String message = plugin.getConfig().getString("marry-message");
 		message = message.replaceAll("%player_1%", pname);
 		message = message.replaceAll("%player_2%", opname);
@@ -240,7 +226,7 @@ public class MarriageCMD implements CommandExecutor{
 
 	public void showList(Player player)
 	{	
-		player.sendMessage(ChatColor.RED + "Couples:");
+		player.sendMessage(ChatColor.RED + "========= Married Couples =========");
 
 		for(String partner : plugin.getCustomConfig().getStringList("partners"))
 		{
@@ -303,16 +289,16 @@ public class MarriageCMD implements CommandExecutor{
 		if(!plugin.chat.contains(pname))
 		{
 			plugin.chat.add(pname);
-			player.sendMessage("[Marriage] " + ChatColor.GREEN + "You have entered marry chat mode!");
+			player.sendMessage(ChatColor.GREEN + "You have entered marry chat mode!");
 		}
 		else if(plugin.chat.contains(pname))
 		{
 			plugin.chat.remove(pname);
-			player.sendMessage("[Marriage] " + ChatColor.GREEN + "You have left marry chat mode!");
+			player.sendMessage(ChatColor.GREEN + "You have left marry chat mode!");
 		}else
 		{
 			plugin.chat.add(pname);
-			player.sendMessage("[Marriage] " + ChatColor.GREEN + "You have entered marry chat mode!");
+			player.sendMessage(ChatColor.GREEN + "You have entered marry chat mode!");
 		}
 	}
 }

@@ -27,7 +27,7 @@ public class OnQuit implements Listener{
 			if(plugin.chat.contains(opname))
 			{
 				plugin.chat.remove(opname);
-				oPlayer.sendMessage("[Marriage] " + ChatColor.GREEN + "You have left marry chat mode!");
+				oPlayer.sendMessage(ChatColor.GREEN + "You have left marry chat mode!");
 			}
 			if(plugin.chat.contains(pname))
 			{
@@ -41,23 +41,7 @@ public class OnQuit implements Listener{
 		if(plugin.people.contains(plugin.getCustomConfig().getString("Married." + pname)))
 		{
 			Player oPlayer = Bukkit.getServer().getPlayer(plugin.getCustomConfig().getString("Married." + pname));
-			oPlayer.sendMessage("[Marriage] " + ChatColor.RED + "Your partner is now offline!");
-		}
-		if(plugin.getCustomConfig().getStringList("males").contains(pname))
-		{
-			event.setQuitMessage("");
-			String message = plugin.getConfig().getString("genders.Quit_Message");
-			message = message.replaceAll("%player%", pname);
-			message = plugin.fixColors(message);
-			plugin.getServer().broadcastMessage(ChatColor.AQUA + message);
-		}
-		if(plugin.getCustomConfig().getStringList("females").contains(pname))
-		{
-			event.setQuitMessage("");
-			String message = plugin.getConfig().getString("genders.Quit_Message");
-			message = message.replaceAll("%player%", pname);
-			message = plugin.fixColors(message);
-			plugin.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + message);
+			oPlayer.sendMessage(ChatColor.RED + "Your partner is now offline!");
 		}
 	}
 }

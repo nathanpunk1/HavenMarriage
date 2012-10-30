@@ -22,14 +22,14 @@ public class OnCommand implements Listener{
 		{
 			plugin.people.add(pname);
 		}
-		if(message.equals("/marriage"))
+		if(message.equals("/love"))
 		{
-			player.sendMessage(ChatColor.RED + "========{ Marriage Reloaded }=========");
-			player.sendMessage(ChatColor.RED + "/marriage list - see all married players");
-			player.sendMessage(ChatColor.RED + "/marriage <name> - send a marry request to someone");
-			player.sendMessage(ChatColor.RED + "/marriage accept <sender> - accept a marry request");
-			player.sendMessage(ChatColor.RED + "/marriage chat - Chat together with your partner ");
-			player.sendMessage(ChatColor.RED + "/marriage divorce - If things just dont go your way");
+			player.sendMessage(ChatColor.RED + "========{ LoveLife }=========");
+			player.sendMessage(ChatColor.RED + "/love list - see all married players");
+			player.sendMessage(ChatColor.RED + "/love <name> - send a marry request to someone");
+			player.sendMessage(ChatColor.RED + "/love accept <sender> - accept a marry request");
+			player.sendMessage(ChatColor.RED + "/love chat - Chat together with your partner ");
+			player.sendMessage(ChatColor.RED + "/love divorce - If things just dont go your way");
 			event.setCancelled(true);
 		}
 	}
