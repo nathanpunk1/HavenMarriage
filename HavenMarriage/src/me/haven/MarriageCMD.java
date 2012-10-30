@@ -20,7 +20,7 @@ public class MarriageCMD implements CommandExecutor{
 	private String NoPerm = "You dont have Permission!";
 	private String Marry = "You Are Now Married Congratulations";
 	private String po = "Your partner is offline!";
-
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args)
 	{
 		Player player = null;
@@ -226,11 +226,13 @@ public class MarriageCMD implements CommandExecutor{
 
 	public void showList(Player player)
 	{	
+		String pname = player.getName();
+		
 		player.sendMessage(ChatColor.RED + "========= Married Couples =========");
 
 		for(String partner : plugin.getCustomConfig().getStringList("partners"))
 		{
-			player.sendMessage(partner + "," + plugin.getCustomConfig().getString(partner));
+			player.sendMessage(partner + "," + plugin.getCustomConfig().getString(pname));
 		}
 	}
 
