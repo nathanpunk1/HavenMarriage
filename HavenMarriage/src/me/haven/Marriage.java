@@ -36,6 +36,8 @@ public class Marriage extends JavaPlugin{
 
 	public void onEnable()
 	{
+		
+		
 		PluginManager pm = getServer().getPluginManager();
 		final FileConfiguration config = this.getConfig();
 

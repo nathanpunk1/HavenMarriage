@@ -25,11 +25,12 @@ public class OnCommand implements Listener{
 		if(message.equals("/love"))
 		{
 			player.sendMessage(ChatColor.RED + "========{ LoveLife }=========");
-			player.sendMessage(ChatColor.RED + "/love list" + ChatColor.GREEN + "- see all married players");
-			player.sendMessage(ChatColor.RED + "/love <name>" + ChatColor.GREEN + "- send a marry request to someone");
-			player.sendMessage(ChatColor.RED + "/love accept <sender>" + ChatColor.GREEN +  "- accept a marry request");
-			player.sendMessage(ChatColor.RED + "/love chat" + ChatColor.GREEN + "- Enter/Leave Love Chat ");
-			player.sendMessage(ChatColor.RED + "/love divorce" + ChatColor.GREEN +  "- Divorce You Partner");
+			player.sendMessage(ChatColor.RED + "/love list" + ChatColor.GREEN + " - See All Married Players");
+			player.sendMessage(ChatColor.RED + "/love <name>" + ChatColor.GREEN + " - Send a Marry Request To Someone");
+			player.sendMessage(ChatColor.RED + "/love accept <sender>" + ChatColor.GREEN +  " - Accept a Marry Request");
+			player.sendMessage(ChatColor.RED + "/love chat" + ChatColor.GREEN + " - Enter/Leave Love Chat ");
+			player.sendMessage(ChatColor.RED + "/love divorce" + ChatColor.GREEN +  " - Divorce You Partner");
+			player.sendMessage(ChatColor.RED + "/love cost" + ChatColor.GREEN +  " - The Cost Of Marriage/Divorce");
 			event.setCancelled(true);
 		}
 	}

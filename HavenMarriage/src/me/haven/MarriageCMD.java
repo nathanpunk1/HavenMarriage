@@ -4,13 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 
 public class MarriageCMD implements CommandExecutor{
 	public List<String> reqs = new ArrayList<String>();
@@ -41,6 +41,7 @@ public class MarriageCMD implements CommandExecutor{
 
 	    if(player.hasPermission("love.*"))
 	    {
+	    	player.hasPermission("love.cost");
 	    	player.hasPermission("love.marry");
 	    	player.hasPermission("love.love");
 	    	player.hasPermission("love.list");
@@ -77,7 +78,17 @@ public class MarriageCMD implements CommandExecutor{
 	    	}
 	    }
 
+	    else if(args[0].equals("cost"))
+	    {
+    		if(!player.hasPermission("love.cost"))
+    		{
+    			player.sendMessage(ChatColor.RED + this.NoPerm);
+    			return true;
+    		}
+	    	this.Cost(player);
+	    }
 
+	    
 	    else if(args[0].equals("list"))
 	    {
     		if(!player.hasPermission("love.list"))
@@ -114,6 +125,7 @@ public class MarriageCMD implements CommandExecutor{
     		}
     		this.divorce(player, opname);
 	    }
+
 	    
 	    else if(args[0].equals("chat"))
 	    {
@@ -154,18 +166,18 @@ public class MarriageCMD implements CommandExecutor{
 		}
 		return true;
 	}
-
+	
 	public void SendRequest(Player player, Player oPlayer)
 	{
 		String pname = player.getName();
 		String opname = oPlayer.getName();
 
-		if(plugin.getCustomConfig().getString("Married." + pname) != null && plugin.getCustomConfig().getString("Married." + pname) != "")
+		if(plugin.getCustomConfig().getString("Married." + pname).equalsIgnoreCase("Married." + pname) && plugin.getCustomConfig().getString("Married." + pname) != null && plugin.getCustomConfig().getString("Married." + pname) != "")
 		{
 			player.sendMessage(ChatColor.RED + "You are already Married!");
 			return;
 		}
-		if(plugin.getCustomConfig().getString("Married." + opname) != null && plugin.getCustomConfig().getString("Married." + opname) != "")
+		if(plugin.getCustomConfig().getString("Married." + opname).equalsIgnoreCase("Married." + opname) && plugin.getCustomConfig().getString("Married." + opname) != null && plugin.getCustomConfig().getString("Married." + opname) != "")
 		{
 			player.sendMessage(ChatColor.RED + opname + " is already Married!");
 			return;
@@ -174,13 +186,13 @@ public class MarriageCMD implements CommandExecutor{
 		{
 			if(plugin.buyMarry(player, plugin.getConfig().getInt("money.marry")))
 			{
-				player.sendMessage(ChatColor.GREEN + "Some money has been taken form your balence!");
+				player.sendMessage(ChatColor.GREEN + "$" + plugin.getConfig().getInt("money.marriage") + " has been taken form your balance!");
 			}else
 			{
 				return;
 			}
 		}
-		player.sendMessage(ChatColor.GREEN + "Request has been sended!");
+		player.sendMessage(ChatColor.GREEN + "Request has been sent!");
 		oPlayer.sendMessage(ChatColor.GREEN + pname + " requested you to marry, type: " + ChatColor.LIGHT_PURPLE + "/love accept <sender>" + ChatColor.GREEN + " to accept");
 		reqs.add(opname);
 		reqs.add(pname);
@@ -188,14 +200,15 @@ public class MarriageCMD implements CommandExecutor{
 
 	public void Accept(Player player, Player oPlayer)
 	{
+	
 		String pname = player.getName();
 		String opname = oPlayer.getName();
-		if(plugin.getCustomConfig().getString("Married." + pname) != null && plugin.getCustomConfig().getString("Married." + pname) != "")
+		if(plugin.getCustomConfig().getString("Married." + pname).equalsIgnoreCase("Married." + pname) && plugin.getCustomConfig().getString("Married." + pname) != null && plugin.getCustomConfig().getString("Married." + pname) != "")
 		{
 			player.sendMessage(ChatColor.RED + "You are already Married!");
 			return;
 		}
-		if(plugin.getCustomConfig().getString("Married." + opname) != null && plugin.getCustomConfig().getString("Married." + opname) != "")
+		if(plugin.getCustomConfig().getString("Married." + opname).equalsIgnoreCase("Married." + opname) && plugin.getCustomConfig().getString("Married." + opname) != null && plugin.getCustomConfig().getString("Married." + opname) != "")
 		{
 			player.sendMessage(ChatColor.RED + opname + "is already Married!");
 			return;
@@ -212,7 +225,6 @@ public class MarriageCMD implements CommandExecutor{
 		}
 		plugin.getCustomConfig().set("Married." + pname, opname);
 		plugin.getCustomConfig().set("Married." + opname, pname);
-		partners.add(opname);
 		plugin.getCustomConfig().set("partners", partners);
 		plugin.saveCustomConfig();
 		player.sendMessage(ChatColor.GREEN + this.Marry + " " + opname);
@@ -224,15 +236,19 @@ public class MarriageCMD implements CommandExecutor{
 		Bukkit.getServer().broadcastMessage(message);
 	}
 
+	public void Cost(Player player)
+	{	
+		player.sendMessage(ChatColor.GREEN + "Marriage:" + "$" + plugin.getConfig().getInt("money.marriage"));
+		player.sendMessage(ChatColor.GREEN + "Divorce:" + "$" + plugin.getConfig().getInt("money.divorce"));
+	}
+	
 	public void showList(Player player)
 	{	
-		String pname = player.getName();
-		
 		player.sendMessage(ChatColor.RED + "========= Married Couples =========");
 
 		for(String partner : plugin.getCustomConfig().getStringList("partners"))
 		{
-			player.sendMessage(partner + "," + plugin.getCustomConfig().getString(pname));
+			player.sendMessage(partner + " + " + plugin.getCustomConfig().getString("Married." + partner));
 		}
 	}
 
@@ -242,25 +258,14 @@ public class MarriageCMD implements CommandExecutor{
 		{
 			if(plugin.buyMarry(player, plugin.getConfig().getInt("money.divorce")))
 			{
-				player.sendMessage(ChatColor.GREEN + "Some money has been taken form your balance!");
+				player.sendMessage(ChatColor.GREEN + "$" + plugin.getConfig().getInt("money.divorce") + " has been taken form your balance!");
 			}else
 			{
 				return;
 			}
+			plugin.getConfig().getInt("money.divorce");
 		}
 		String pname = player.getName();
-		plugin.getCustomConfig().set("home." + pname + ".world", "");
-		plugin.getCustomConfig().set("home." + pname + ".getX", "");
-		plugin.getCustomConfig().set("home." + pname + ".getZ", "");
-		plugin.getCustomConfig().set("home." + pname + ".getY", "");
-		plugin.getCustomConfig().set("home." + pname + ".getYaw", "");
-		plugin.getCustomConfig().set("home." + pname + ".getPitch", "");
-		plugin.getCustomConfig().set("home." + opname + ".world", "");
-		plugin.getCustomConfig().set("home." + opname + ".getX", "");
-		plugin.getCustomConfig().set("home." + opname + ".getZ", "");
-		plugin.getCustomConfig().set("home." + opname + ".getY", "");
-		plugin.getCustomConfig().set("home." + opname + ".getYaw", "");
-		plugin.getCustomConfig().set("home." + opname + ".getPitch", "");
 		plugin.getCustomConfig().set("Married." + pname, "");
 		plugin.getCustomConfig().set("Married." + opname, "");
 		plugin.saveCustomConfig();
@@ -276,7 +281,7 @@ public class MarriageCMD implements CommandExecutor{
 			plugin.getCustomConfig().set("partners", partners);
 			plugin.saveCustomConfig();
 		}
-		player.sendMessage("[Marriage] " + ChatColor.GREEN + "You have divorced your partner");
+		player.sendMessage(ChatColor.GREEN + "You have divorced your partner");
 		String div = plugin.getConfig().getString("divorce-message");
 		div = div.replaceAll("%player_1%", pname);
 		div = div.replaceAll("%player_2%", opname);
@@ -305,4 +310,3 @@ public class MarriageCMD implements CommandExecutor{
 	}
 
 }
-	
